@@ -29,4 +29,14 @@ class ProfileUpdateRequest extends FormRequest
         'password' => 'nullable|min:8',
         ];
     }
+     public function messages()
+    {
+        return [
+            'first_name.max' => 'First name should not be above 255',
+            'last_name.max'  => 'Last name should not be above 255',
+            'email.email'         => 'Please provide a valid email address',
+            'image.max'         => 'image file should not be above 2 MB',
+            'password.min'        => 'Password must be at least 8 characters',
+        ];
+    }
 }

@@ -1,4 +1,4 @@
- <header>
+  <header>
       <!-- Navigation -->
       <nav
         x-data="{ mobileMenuOpen: false, userMenuOpen: false }"
@@ -7,11 +7,11 @@
           <div class="flex h-16 justify-between">
             <div class="flex">
               <div class="flex flex-shrink-0 items-center">
-                <a href="{{url('/barta')}}">
+                <a href="/">
                   <h2 class="font-bold text-2xl">Barta</h2>
                 </a>
               </div>
-              <!--              <div class="hidden sm:ml-6 sm:flex sm:space-x-8">-->
+                           <!-- <div class="hidden sm:ml-6 sm:flex sm:space-x-8">-->
               <!--                &lt;!&ndash; Current: "border-gray-800 text-gray-900 font-semibold", Default: "border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-800" &ndash;&gt;-->
               <!--                <a-->
               <!--                  href="#"-->
@@ -28,15 +28,23 @@
               <!--                  class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-600 hover:border-gray-300 hover:text-gray-800"-->
               <!--                  >People</a-->
               <!--                >-->
-              <!--              </div>-->
+              <!--              </div> -->
             </div>
+            <!-- Search input -->
+            <form action="" method="POST" class="flex items-center">
+              <input
+                      type="text"
+                      placeholder="Search..."
+                      class="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
+              />
+            </form>
             <div class="hidden sm:ml-6 sm:flex gap-2 sm:items-center">
               <!-- This Button Should Be Hidden on Mobile Devices -->
-              <!--              <button-->
-              <!--                type="button"-->
-              <!--                class="text-gray-900 hover:text-white border-2 border-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden md:block">-->
-              <!--                Create Post-->
-              <!--              </button>-->
+                  <button
+                    type="button"
+                    class="text-gray-900 hover:text-white border-2 border-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hidden md:block">
+                    Create Post
+                  </button>
 
               <!--              <button-->
               <!--                type="button"-->
@@ -91,7 +99,7 @@
                     <span class="sr-only">Open user menu</span>
                     <img
                       class="h-8 w-8 rounded-full"
-                      src="{{$user->image?asset('storage/profile_images/' . $user->image):asset('images/default.jpg')}}"
+                      src="https://avatars.githubusercontent.com/u/831997"
                       alt="Ahmed Shamim Hasan Shaon" />
                   </button>
                 </div>
@@ -106,7 +114,7 @@
                   aria-labelledby="user-menu-button"
                   tabindex="-1">
                   <a
-                    href="{{url('profile_page')}}"
+                    href="./profile.html"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                     tabindex="-1"
@@ -114,19 +122,21 @@
                     >Your Profile</a
                   >
                   <a
-                    href="{{url('profile_edit_page')}}"
+                    href="./edit-profile.html"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                     tabindex="-1"
                     id="user-menu-item-1"
                     >Edit Profile</a
                   >
-                    <form id="logout-form" action="{{ url('logout') }}" method="POST" >
-                     @csrf
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                    Logout
-                  </button>
-                  </form>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="user-menu-item-2"
+                    >Sign out</a
+                  >
                 </div>
               </div>
             </div>

@@ -25,8 +25,34 @@
     </style>
       @vite('resources/css/app.css')
        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body class="h-full">
     @yield('content')
+
+    <script>
+      // Function to handle SweetAlert2 confirmation
+    function confirmDelete(event, element) {
+        event.preventDefault(); // Prevent the default action (link navigation)
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, proceed with deletion
+                 // If confirmed, submit the form programmatically
+                element.closest('form').submit();
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire('Cancelled', 'Your  is safe :)', 'error');
+            }
+        });
+    }
+    </script>
   </body>
 </html>

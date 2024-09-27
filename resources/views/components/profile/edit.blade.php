@@ -41,6 +41,9 @@
                         Change
                       </div>
                     </label>
+                     @error('image')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                   </div>
                 </div>
 
@@ -60,6 +63,9 @@
                       value="{{$user->first_name}}"
                       class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
                   </div>
+                     @error('first_name')
+                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                     @enderror
                 </div>
 
                 <div class="sm:col-span-3">
@@ -77,6 +83,9 @@
                       autocomplete="family-name"
                       class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
                   </div>
+                     @error('last_name')
+                   <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="col-span-full">
@@ -94,6 +103,9 @@
                       value="{{$user->email}}"
                       class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
                   </div>
+                     @error('email')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="col-span-full">
@@ -110,6 +122,9 @@
                       autocomplete="password"
                       class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
                   </div>
+                    @error('password')
+                   <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                   @enderror
                 </div>
               </div>
             </div>

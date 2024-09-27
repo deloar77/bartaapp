@@ -14,8 +14,12 @@ class ProfileController extends Controller
 {
     public function profile_page(){
         $user=Auth::user();
+        $id=Auth::id();
+     
+        $posts=DB::table('posts')->where('user_id',$id)->get();
         
-        return view('pages.profile-page',compact('user'));
+        
+        return view('pages.profile-page',compact('user','posts'));
     }
     public function profile_edit_page(){
         $user=Auth::user();

@@ -54,4 +54,8 @@ public function getProfilePhotoUrl()
         : asset('images/default.png'); // Default profile image path
 }
 
+  public function posts(){
+    return $this->hasMany(Post::class);
+  }
+
 }

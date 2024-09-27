@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeFeedController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -14,11 +16,18 @@ Route::get('/login',[LoginController::class,'login_page'])->name('login');
 Route::post('/login',[LoginController::class,'login']);
 
 Route::middleware('auth')->group(function(){
+
 Route::get('/dashboard_page',[DashboardController::class,'dashboard_page'])->name('dashboard');
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
-Route::get('profile_page',[ProfileController::class,'profile_page']);
+Route::get('profile_page',[ProfileController::class,'profile_page'])->name('profile.page');
 Route::get('/profile_edit_page',[ProfileController::class,'profile_edit_page']);
 Route::put('/profile_update',[ProfileController::class,'profile_update'])->name('profile.update');
+Route::post('/posts',[PostController::class,'store'])->name('posts.store');
+Route::get('/posts/{photo}/edit',[PostController::class,'edit'])->name('posts.edit');
+Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+Route::get('/barta',[HomeFeedController::class,'barta']);
+Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
+
 });
 
 
