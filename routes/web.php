@@ -7,6 +7,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,6 +15,7 @@ Route::get('/register-page',[RegisterController::class,'register_page'])->name('
 Route::post('/register',[RegisterController::class,'register'])->name('register');
 Route::get('/login',[LoginController::class,'login_page'])->name('login');
 Route::post('/login',[LoginController::class,'login']);
+
 
 Route::middleware('auth')->group(function(){
 
@@ -27,6 +29,8 @@ Route::get('/posts/{photo}/edit',[PostController::class,'edit'])->name('posts.ed
 Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::get('/barta',[HomeFeedController::class,'barta']);
 Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
+Route::get('/search',[SearchController::class,'search'])->name('users.search');
+Route::get('/user/{id}',[SearchController::class,'show'])->name('user.show');
 
 });
 

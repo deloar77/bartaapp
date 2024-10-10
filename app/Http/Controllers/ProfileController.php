@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Post;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +18,8 @@ class ProfileController extends Controller
         $user=Auth::user();
         $id=Auth::id();
      
-        $posts=DB::table('posts')->where('user_id',$id)->get();
+        // $posts=DB::table('posts')->where('user_id',$id)->get();
+        $posts=Post::where('user_id',$id)->get();
         
         
         return view('pages.profile-page',compact('user','posts'));
@@ -30,15 +33,16 @@ class ProfileController extends Controller
        
         $id=Auth::id();
         try {
-                       $user=  DB::table('users')->where('id',$id)->first();
+                      //  $user=  DB::table('users')->where('id',$id)->first();
+                      // Retrieve the user using Eloquent ORM
+                       $user = User::find($id);
                       if($user){
-                          $data=[
-                                'first_name'=>$request->input('first_name'),
-                                'last_name'=>$request->input('last_name'),
-                                'email'=>$request->input('email'),
-                                'bio'=>$request->input('bio')
-
-                               ];
+                          // Prepare data for updating the user profile
+                          $user->first_name = $request->input('first_name');
+                          $user->last_name = $request->input('last_name');
+                           $user->email = $request->input('email');
+                          $user->bio = $request->input('bio');
+                          $user->updated_at=now();
                              
                             // Check if a new password is provided and hash it
                           if ($request->filled('password')) {
@@ -71,11 +75,16 @@ class ProfileController extends Controller
                                 $image->move($directoryPath, $imageName);
 
                               // Save the image path in the data array
-                             $data['image'] = $imageName;
+                            //  $data['image'] = $imageName;
+                              // Save the new image path in the user model
+                               $user->image = $imageName;
                          }
                         
                               // Update the user in the database
-                              DB::table('users')->where('id', $id)->update($data);
+                              // DB::table('users')->where('id', $id)->update($data);
+                               // Save the user with the updated data using Eloquent
+                               $user->save();
+
 
                             // Redirect back with success message
                              return redirect()->back()->with('success', 'Profile updated successfully.');

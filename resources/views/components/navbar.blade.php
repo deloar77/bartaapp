@@ -27,6 +27,20 @@
             class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-600 hover:border-gray-300 hover:text-gray-800"
             >People</a
           >
+          
+                 
+           
+        </div>
+        <div class="m-2">
+         
+                   <form action="{{route('users.search')}}" method="GET" class="flex">
+                        @csrf
+                        <input type="text" name="search" class="m-2 px-4 py-1 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Search users..." aria-label="Search">
+                        <button type="submit" class="px-4 py-1 m-2 bg-indigo-600 text-white font-medium rounded-r-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Search
+                        </button>
+                    </form>
+           
         </div>
       </div>
       <div class="hidden sm:ml-6 sm:flex gap-2 sm:items-center">

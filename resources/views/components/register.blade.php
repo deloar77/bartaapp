@@ -55,6 +55,25 @@
     @enderror
 </div>
 
+<!-- username -->
+<div>
+    <label for="last_name" class="block text-sm font-medium leading-6 text-gray-900">Username</label>
+    <div class="mt-2">
+        <input
+            id="username"
+            name="username"
+            type="text"
+            autocomplete="last_name"
+            placeholder="Username"
+            value="{{ old('username') }}"
+            required
+            class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6" />
+    </div>
+    @error('username')
+        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
 <!-- Email -->
 <div>
     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>

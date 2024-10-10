@@ -1,17 +1,24 @@
-@forelse ($posts as $post)
-  <article class="bg-white border border-gray-200 rounded-lg shadow-lg mx-auto w-[900px] mt-4 px-6 py-5 sm:px-8">
+@forelse ($user->posts as $post)
+  <article class="bg-white border border-gray-200 rounded-lg shadow-lg mx-auto w-[900px] px-6 py-5 sm:px-8">
     <!-- Barta Card Top -->
     <header>
       <div class="flex items-center justify-between">
-        <div class="flex-shrink-0">
-          <img
-            class="h-10 w-10 rounded-full object-cover"
-            src="{{ $post->user->image ? asset('storage/profile_images/' . $post->user->image) : asset('images/default.jpg') }}"
-            alt="User Image" />
-          <a href="profile.html" class="hover:underline font-semibold text-lg truncate">
-            {{ $post->first_name }} {{ $post->last_name }} 
+           <div class="flex-shrink-0">
+                <img
+                    class="h-10 w-10 rounded-full object-cover"
+                    src="{{$user->image?asset('storage/profile_images/' . $user->image):asset('images/default.jpg')}}"
+                    alt="Ahmed Shamim" />
+                    <a href="profile.html" class="hover:underline font-semibold text-lg truncate">
+            {{ $user->first_name }} {{ $user->last_name }} 
           </a>
-        </div>
+          <a href="profile.html" class="hover:underline text-sm text-gray-500 truncate">
+            @<!-- Assuming you have a username field -->
+          </a>
+            </div>
+        <!-- User Info -->
+        
+        <!-- /User Info -->
+
         <!-- Card Action Dropdown -->
         <div class="relative" x-data="{ open: false }">
           <button @click="open = !open" class="flex items-center rounded-full p-2 text-gray-500 hover:text-gray-700">
@@ -21,6 +28,7 @@
             </svg>
           </button>
 
+         
           <!-- Dropdown Menu -->
           <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 mt-2 w-40 bg-white rounded-md shadow-lg">
             @if (Auth::check())
@@ -44,26 +52,35 @@
     </header>
 
     <!-- Content -->
-    <div class="mt-4 text-gray-700">
-      <p class="leading-relaxed">
-        {{ $post->body }} <!-- Assuming the post body is stored in 'body' field -->
-      </p>
-    </div>
+    <a href="./single.html">
+      <div class="mt-4 text-gray-700">
+        <p class="leading-relaxed">
+          {{ $post->body }} <!-- Assuming the post body is stored in 'body' field -->
+        </p>
+      </div>
+    </a>
 
-    <!-- Image Section -->
+    <!-- Image Section (Full Card Width and Custom Height) -->
     <div class="mt-4 flex justify-center">
-      <img
-        class="w-full h-[400px] object-cover  rounded-lg"
-        src="{{ $post->image ? asset('storage/post_images/' . $post->image) : asset('images/default.jpg') }}"
-        alt="Post Image" />
-    </div>
+    @if($post->image)
+        <img
+            class="w-full h-[400px] object-cover rounded-lg"
+            src="{{ asset('storage/post_images/' . $post->image) }}"
+            alt="Post Image" />
+    @else
+        <div class="w-full h-auto rounded-lg bg-gray-100 flex items-center justify-center text-gray-500">
+           
+        </div>
+    @endif
+</div>
+
     <!-- /Image Section -->
 
     <!-- Date Created & View Stat -->
     <div class="flex items-center gap-2 text-gray-500 text-xs mt-4">
-      <!-- Display time since created -->
+      <span>{{ $post->created_at }}</span> <!-- Display time since created -->
       <span>•</span>
-       <!-- Assuming you have a views field -->
+      <span> views</span> <!-- Assuming you have a views field -->
     </div>
 
     <!-- Barta Card Bottom -->
@@ -75,7 +92,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
             </svg>
-            <p class="ml-1"> comments</p> <!-- Assuming you have a way to count comments -->
+            <p class="ml-1">comments count</p> <!-- Assuming you have a way to count comments -->
           </button>
           <!-- /Comment Button -->
         </div>

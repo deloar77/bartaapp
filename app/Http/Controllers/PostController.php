@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostUpdateRequest;
+use App\Models\Post;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\TryCatch;
 
 class PostController extends Controller
@@ -17,13 +19,13 @@ class PostController extends Controller
          $validated=$request->validated();
          $id=Auth::id();
          try {
-             // Prepare the data array for inserting the post
-           $data = [
-            'user_id' => $id,
-            'body' => $validated['body'], // Text content of the post
-            'created_at' => now(),  // Current timestamp
-             'updated_at' => now()   // Current timestamp
-         ];
+        
+          // Create a new Post instance
+        $post = new Post();
+        $post->user_id = $id;
+        $post->body = $validated['body'];
+        $post->created_at = now();
+        $post->updated_at = now();
             if($request->hasFile('image')){
                 $image = $request->file('image');
                 $imageName = time() . '_' . $image->getClientOriginalName();
@@ -35,12 +37,14 @@ class PostController extends Controller
                             // Move the uploaded image to the desired location
                              $image->move($directoryPath, $imageName);
 
-                              // Save the image path in the data array
-                             $data['image'] = $imageName;
+                            
+                             // Save the image name or path in the Post model
+                            $post->image = $imageName;
             }
                 // Insert the data into the database using the DB facade
-                DB::table('posts')->insert($data);
-
+                // DB::table('posts')->insert($data);
+            // Save the Post using Eloquent
+                $post->save();
             // Redirect or return success response
              return redirect()->back()->with('success', 'Post created successfully!');
          } catch (Exception $e) {
@@ -53,7 +57,9 @@ class PostController extends Controller
 
   public function edit(Request $request,$id){
    
-      $post = DB::table('posts')->where('id',$id)->first();
+      // $post = DB::table('posts')->where('id',$id)->first();
+       $post = Post::find($id);  
+      // $post = Post::where('id', $id)->first(); 
       
     return view('pages.posts.post-edit-page',compact('post'));
   }
@@ -61,15 +67,15 @@ class PostController extends Controller
     public function update(PostUpdateRequest $request,$id){
       $validated = $request->validated();
         
-         try {
-                       $post=  DB::table('posts')->where('id',$id)->first();
+              try {
+                      //  $post=  DB::table('posts')->where('id',$id)->first();
+                       // Retrieve the post using Eloquent ORM
+                       $post = Post::find($id);
                       if($post){
-                          $data=[
-                                'body'=>$request->input('body'),
-                                'updated_at'=>now()
-
-                               ];
-                             
+                         
+                       $post->body = $request->input('body');
+                       $post->updated_at = now();
+                              
                       
                        // Handle image upload
                        if ($request->hasFile('image')) {
@@ -79,9 +85,10 @@ class PostController extends Controller
                              
                                   $existingImagePath = storage_path('app/public/post_images/' . $post->image);
 
-                                  if (file_exists($existingImagePath)) {
+                                if (file_exists($existingImagePath)) {
                                    unlink($existingImagePath); // Delete the old image
                                 }
+              
                            }
                             $image = $request->file('image');
  
@@ -97,12 +104,13 @@ class PostController extends Controller
                               // Move the uploaded image to the desired location
                                 $image->move($directoryPath, $imageName);
 
-                              // Save the image path in the data array
-                             $data['image'] = $imageName;
+                             // Save the new image path in the post model
+                              $post->image = $imageName;
                          }
                         
-                              // Update the user in the database
-                              DB::table('posts')->where('id', $id)->update($data);
+                              
+                               // Update the post using Eloquent
+                               $post->save();
 
                             // Redirect back with success message
                              return redirect()->back()->with('success', 'Profile updated successfully.');
@@ -121,21 +129,27 @@ class PostController extends Controller
     }
 
     public function destroy($id){
+     
     
       // Delete the post by its ID
       try {
-         $post=  DB::table('posts')->where('id',$id)->first();
+        //  $post=  DB::table('posts')->where('id',$id)->first();
+          // Retrieve the post using Eloquent ORM
+          $post = Post::find($id);
         if($post){
          
             $existingImagePath = storage_path('app/public/post_images/' . $post->image);
+            
 
-             if (file_exists($existingImagePath)) {
+               if (file_exists($existingImagePath)) {
                    unlink($existingImagePath); // Delete the old image
                 }
+              
+            //  DB::table('posts')->where('id', $id)->delete();
+                // Delete the post using Eloquent
+              $post->delete();
 
-                 $deleted = DB::table('posts')->where('id', $id)->delete();
-
-                return redirect()->back()->with('success', 'Post deleted successfully.');
+            return redirect()->back()->with('success', 'Post deleted successfully.');
     
         }
 

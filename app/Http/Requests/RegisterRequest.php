@@ -25,6 +25,7 @@ class RegisterRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
+            'username'=>'unique:users',
             'password' => 'required|string|min:8|confirmed', // Assuming you'll use password confirmation
         ];
     }
@@ -41,6 +42,8 @@ class RegisterRequest extends FormRequest
             'first_name.required' => 'First name is required',
             'last_name.required'  => 'Last name is required',
             'email.required'      => 'Email address is required',
+            
+            'username.unique'=>'username is already taken',
             'email.email'         => 'Please provide a valid email address',
             'email.unique'        => 'This email address is already registered',
             'password.required'   => 'Password is required',
