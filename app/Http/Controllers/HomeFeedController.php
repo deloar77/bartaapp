@@ -21,4 +21,10 @@ class HomeFeedController extends Controller
    
         return view('pages.home',compact('user','posts'));
     }
+
+    public function Homefeed(){
+         $user=Auth::user();
+         $posts=Post::with('user')->get();
+         return view('vuepages.Homefeed',compact('user','posts'));
+    }
 }
