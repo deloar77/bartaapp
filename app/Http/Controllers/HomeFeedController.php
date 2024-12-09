@@ -15,7 +15,7 @@ class HomeFeedController extends Controller
     //    ->leftJoin('users', 'posts.user_id', '=', 'users.id')
     //    ->select('posts.*','users.image as user_image','posts.image as post_image','posts.id as post_id', 'users.created_at as user_created_at', 'users.updated_at as user_updated_at', 'users.*')
     //    ->get();
-    $posts=Post::with('user')->get();
+      $posts=Post::with('user')->get();
     
       
    

@@ -10,6 +10,7 @@ export default defineConfig({
         }),
          vue(),
   ],
+  envPrefix: 'VITE_',
      resolve: {
     alias: {
              vue: 'vue/dist/vue.esm-bundler.js',
